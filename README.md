@@ -24,8 +24,8 @@ You will need to have a working installation of [terraform](https://developer.ha
 
 Since not all is implemented in the Google Cloud Terraform Provider or through the API, you will need to install the following tools to use this deployment :
 - [gcloud](https://cloud.google.com/sdk/docs/install) official Google Cloud cli
-- bq included with the gcloud installer
-- curl for direct API calls
+- `bq` included with the gcloud installer
+- `curl` for direct API calls
 
 You will also need to have a power user with sufficient rights to create projects, administrate BigQuery and Analytics Hub.
 
