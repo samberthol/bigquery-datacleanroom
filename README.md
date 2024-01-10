@@ -9,9 +9,9 @@ This is a simple diagram of a Data Clean Room on Google Cloud
 ![diagram](./assets/cleanroom_arch.png)
 
 ## Components
-[BigQuery](https://cloud.google.com/bigquery/docs/introduction) is centric to the deployment of [Data Clean Rooms] (https://cloud.google.com/bigquery/docs/data-clean-rooms) on Google Cloud. Yet Data can be imported from a BigQuery DataLake external bucket like S3 or GCS. 
+[BigQuery](https://cloud.google.com/bigquery/docs/introduction) is centric to the deployment of [Data Clean Rooms](https://cloud.google.com/bigquery/docs/data-clean-rooms) on Google Cloud. Yet Data can be imported from a BigQuery DataLake external bucket like S3 or GCS. 
 
-In the current setup we use the DataExchange feature of BigQuery Analytics Hub since Data Clean Rooms are not yet fully available through the API. We implement on the DataExchange the Privacy Policies that enable to provide the same feature as the Data Clean Room does, by enforcing an `aggregation_threshold`.
+In the current setup we use the DataExchange feature of BigQuery Analytics Hub since Data Clean Rooms are not yet fully available through the API. We implement on the DataExchange the [Privacy Policies](https://cloud.google.com/bigquery/docs/privacy-policies#what_is_a_privacy_policy) that enable to provide the same feature as the Data Clean Room does, by enforcing an `aggregation_threshold`.
 
 ## Setup
 
