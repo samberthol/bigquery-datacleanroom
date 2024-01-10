@@ -4,9 +4,6 @@
 # distributed is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES
 # OR CONDITIONS OF ANY KIND, either express or implied.
 
-
-
-
 output "projects" {
   description = "GCP Projects information."
   value = {
@@ -30,7 +27,7 @@ output "service_accounts" {
 output "bigquery-datasets" {
   description = "BigQuery datasets."
   value = {
-    thelook_dataset = module.thelook-dataset.dataset_id,
+    thelook_dataset       = module.thelook-dataset.dataset_id,
     datacleanroom_dataset = module.dcr-dataset.dataset_id
   }
 }
