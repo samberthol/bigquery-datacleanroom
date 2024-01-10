@@ -5,8 +5,7 @@
 # OR CONDITIONS OF ANY KIND, either express or implied.
 
 
-# Defining the IAM for the 
-
+# Creating a BigQuery dataset to host the sample data set "thelook_ecommerce"
 module "thelook-dataset" {
   source         = "../modules/bigquery-dataset"
   project_id     = module.land-project.project_id
@@ -14,6 +13,8 @@ module "thelook-dataset" {
   location       = var.location
 }
 
+# Setting up the transfer of the sample data set "thelook_ecommerce" from the public project "bigquery-public-data" to the Data Clean Room project
+# Verify if transfer is working in https://console.cloud.google.com/bigquery/transfers
 resource "google_bigquery_data_transfer_config" "thelooktransfer" {
   depends_on = [module.land-project, module.land-sa-0, module.thelook-dataset]
   project = module.land-project.project_id
@@ -28,6 +29,7 @@ resource "google_bigquery_data_transfer_config" "thelooktransfer" {
   }
 }
 
+# Setting up the IAM policy to allow the Data Clean Room service account to impersonate the BigQuery Data Transfer service account
 resource "null_resource" "set_transfer_iam" {
   triggers = {
     always_run = "${timestamp()}"
@@ -38,6 +40,8 @@ resource "null_resource" "set_transfer_iam" {
   }
 }
 
+# This may fail or refresh may take several minutes as the Google API is "eventually consistent"
+# This can be troobleshooted from the https://console.cloud.google.com/bigquery/transfers page in the "Run History" tab
 resource "null_resource" "run_transfer" {
   depends_on = [google_bigquery_data_transfer_config.thelooktransfer]
   provisioner "local-exec" {

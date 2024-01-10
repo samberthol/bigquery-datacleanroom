@@ -1,7 +1,7 @@
 # BigQuery Data Clean Room on Google Cloud deployment with Terraform
 This project intends to provide a deployment of a Bigquery Data Clean Room on Google Cloud using Terraform.
 
-Disclaimer : While writing this project, several features of the BigQuery Data Clean Room product are not yet available or still alpha stage. Various workarounds have been used to make this Clean Room deployable. This is not supported code by Google and is provided on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND.
+Disclaimer : While writing this project, several features of the BigQuery Data Clean Room product are not yet available or still "Pre-GA" stage. Various workarounds have been used to make this Clean Room deployable. This is not supported code by Google and is provided on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND.
 
 ## Architecture Design
 
@@ -20,11 +20,36 @@ In this architecture we deploy two projects, one for hosting the Data Clean Room
 ## Setup
 
 ### Prerequisites
+You will need to have a working installation of [terraform](https://developer.hashicorp.com/terraform/install). The working version at the time writing this deployment is [Version 1.6.6](https://releases.hashicorp.com/terraform/1.6.6/terraform_1.6.6_linux_amd64.zip). Upon initialization, the latest Terraform Google Cloud Provider will be downloaded (currently v5.11.0).
+
+Since not all is implemented in the Google Cloud Terraform Provider or through the API, you will need to install the following tools to use this deployment :
+- [gcloud](https://cloud.google.com/sdk/docs/install) official Google Cloud cli
+- bq included with the gcloud installer
+- curl for direct API calls
+
+You will also need to have a power user with sufficient rights to create projects, administrate BigQuery and Analytics Hub.
 
 ### Dependencies
+This deployment uses modules from the [Cloud Foundation Fabric](https://github.com/GoogleCloudPlatform/cloud-foundation-fabric) provided by Google Cloud. Hence the easiest way to install is to put the content of this repo in a folder that is in the root of you cloud foundation fabric folder to access the modules.
 
 ### Set variables
+All the variables that need to be set are instructed in the `terraform.tfvars` file.
 
 ### Running the deployment
+Once you are in the folder of this repo you can issue the `terraform init` command such as :
+```
+user@penguin:~/bigquery-datacleanroom-main$ terraform init 
+```
+Then do a `terraform plan` to verify all dependencies and environment variables have been met :
+```
+user@penguin:~/bigquery-datacleanroom-main$ terraform plan 
+```
+You can then launch the actual deployment using the `terraform apply` command
+```
+user@penguin:~/bigquery-datacleanroom-main$ terraform terraform apply -auto-approve 
+```
 
-## Troubleshooting
+## Troubleshooting & know issues
+You will probably notice a failure upon initial deployment with setting IAM permissions for the public dataset to be copied to your project. This is because the IAM API from Google Cloud is async and "eventually consistent". The best way to fix this is to wait a couple minutes and launch the `terraform apply` command again. You can also view the logs of the [transfer page](https://console.cloud.google.com/bigquery/transfers) in the Run History tab.
+
+When running `terraform destroy` you will notice that the datasets in BigQuery prevent you from cleaning the projects. You can delete the datasets from the cloud console and launch the `terraform destroy` command again.
