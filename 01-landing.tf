@@ -52,9 +52,4 @@ module "land-sa-0" {
   prefix       = var.prefix
   name         = "lnd-sa-0"
   display_name = "DataCleanRoom zone service account."
-  iam = {
-    "roles/iam.serviceAccountTokenCreator" = [
-      local.groups_iam.data-engineers
-    ]
-  }
 }

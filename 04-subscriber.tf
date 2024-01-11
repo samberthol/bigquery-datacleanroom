@@ -56,11 +56,6 @@ module "cur-sa-0" {
   prefix       = var.prefix
   name         = "cur-sa-0"
   display_name = "Subsciber zone service account."
-  iam = {
-    "roles/iam.serviceAccountTokenCreator" = [
-      local.groups_iam.data-engineers
-    ]
-  }
 }
 
 # Subscribing to the clean room listing through an API call
