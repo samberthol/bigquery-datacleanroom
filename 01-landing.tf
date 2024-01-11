@@ -4,17 +4,31 @@
 # distributed is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES
 # OR CONDITIONS OF ANY KIND, either express or implied.
 
-# Setting local variables
+# Setting local variables for IAM
 locals {
+  lnd_services = [
+    "bigquerydatatransfer.googleapis.com",
+    "bigquery.googleapis.com",
+    "bigquerystorage.googleapis.com",
+    "iam.googleapis.com",
+    "analyticshub.googleapis.com",
+  ]
   iam_lnd = {
-    "roles/bigquerydatatransfer.serviceAgent" = [
-      module.land-sa-0.iam_email
-    ]
     "roles/bigquery.admin" = [
-      module.land-sa-0.iam_email
+      module.land-sa-0.iam_email,
+      "user:${var.super_admin}"
     ]
-    "roles/iam.serviceAccountTokenCreator" = [
-      module.land-sa-0.iam_email
+    "roles/analyticshub.viewer" = [
+      module.land-sa-0.iam_email,
+      "user:${var.super_admin}"
+    ]
+    "roles/analyticshub.subscriber" = [
+      module.land-sa-0.iam_email,
+      "user:${var.super_admin}"
+    ]
+   "roles/analyticshub.publisher" = [
+      module.land-sa-0.iam_email,
+      "user:${var.super_admin}"
     ]
   }
 }
@@ -36,13 +50,7 @@ module "land-project" {
   iam = (
     var.project_config.billing_account_id == null ? {} : local.iam_lnd
   )
-  services = [
-    "bigquerydatatransfer.googleapis.com",
-    "bigquery.googleapis.com",
-    "bigquerystorage.googleapis.com",
-    "iam.googleapis.com",
-    "analyticshub.googleapis.com",
-  ]
+  services = local.lnd_services
 }
 
 # Defining the service account that will be used by the Data Clean Room
