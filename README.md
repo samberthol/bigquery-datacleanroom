@@ -49,6 +49,29 @@ You can then launch the actual deployment using the `terraform apply` command
 user@penguin:~/bigquery-datacleanroom-main$ terraform terraform apply -auto-approve 
 ```
 
+# Verify the Clean Room works
+In order to verify it works you can go to the Google Cloud console and check that you have :
+- Search for the newly created Projects that begin with the prefix you have set in the `terraform.tfvars` file
+- You should see two newly created Datasets in BigQuery Studio for the `land-project` Project. The DCR shared dataset should have a view associated.
+- In the `land-project` Project (hosting the Data Clean Room), you should have in the BigQuery > Analytics Hub, you should see an Exchange with a Listing associated. In the Exchange, you should see a Subscriber associated to the Listing.
+- In the `curated-project` Project (for the Subscriber), you should see a Linked Dataset in BigQuery Studio
+
+You can verify the Data Clean Room is effective by issuing a SQL query in the `curated-project` that takes advantage of the Aggregation features of the Clean Room, such as :
+```
+SELECT
+WITH
+  AGGREGATION_THRESHOLD OPTIONS(threshold=20, privacy_unit_column=id) 
+  age,
+  COUNT (DISTINCT id) AS countjointids
+FROM
+  `dcr18cur.dcr18_cur.dcr_view`
+
+GROUP BY
+  age
+ORDER BY
+  1 desc;
+```
+
 ## Troubleshooting & know issues
 You will probably notice a failure upon initial deployment with setting IAM permissions for the public dataset to be copied to your project. This is because the IAM API from Google Cloud is async and "eventually consistent". The best way to fix this is to wait a couple minutes and launch the `terraform apply` command again. You can also view the logs of the [transfer page](https://console.cloud.google.com/bigquery/transfers) in the Run History tab.
 
