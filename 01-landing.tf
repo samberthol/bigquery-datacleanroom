@@ -43,10 +43,6 @@ module "land-project" {
     "iam.googleapis.com",
     "analyticshub.googleapis.com",
   ]
-  service_encryption_key_ids = {
-    bq      = [var.service_encryption_keys.bq]
-    storage = [var.service_encryption_keys.storage]
-  }
 }
 
 # Defining the service account that will be used by the Data Clean Room
