@@ -127,17 +127,3 @@ variable "dcr_listing" {
   type        = string
   default     = null
 }
-
-/*
-variable "ah_api_key" {
-  description = "Analytics Hub Generated API Key"
-  type        = string
-  default     = null
-}
-
-variable "bearer_token" {
-  description = "Current gcloud bearer token"
-  type        = string
-  default     = null
-}
-*/
