@@ -46,7 +46,7 @@ user@penguin:~/bigquery-datacleanroom-main$ terraform plan
 ```
 You can then launch the actual deployment using the `terraform apply` command
 ```
-user@penguin:~/bigquery-datacleanroom-main$ terraform terraform apply -auto-approve 
+user@penguin:~/bigquery-datacleanroom-main$ terraform apply -auto-approve 
 ```
 
 # Verify the Clean Room works
@@ -64,7 +64,7 @@ WITH
   age,
   COUNT (DISTINCT id) AS countjointids
 FROM
-  `dcr1cur.subscribed_dataset.dcr_view` # Replace with your variables
+  `subscribed_dataset.dcr_view` # Replace with your variables
 
 GROUP BY
   age

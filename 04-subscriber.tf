@@ -55,7 +55,7 @@ module "cur-sa-0" {
   project_id   = module.cur-project.project_id
   prefix       = var.prefix
   name         = "cur-sa-0"
-  display_name = "Data platform curated zone service account."
+  display_name = "Subsciber zone service account."
   iam = {
     "roles/iam.serviceAccountTokenCreator" = [
       local.groups_iam.data-engineers

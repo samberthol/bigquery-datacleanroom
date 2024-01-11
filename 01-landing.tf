@@ -51,7 +51,7 @@ module "land-sa-0" {
   project_id   = module.land-project.project_id
   prefix       = var.prefix
   name         = "lnd-sa-0"
-  display_name = "Data platform landing zone service account."
+  display_name = "DataCleanRoom zone service account."
   iam = {
     "roles/iam.serviceAccountTokenCreator" = [
       local.groups_iam.data-engineers
