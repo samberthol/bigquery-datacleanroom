@@ -64,7 +64,7 @@ WITH
   age,
   COUNT (DISTINCT id) AS countjointids
 FROM
-  `dcr18cur.dcr18_cur.dcr_view`
+  `dcr1cur.subscribed_dataset.dcr_view` # Replace with your variables
 
 GROUP BY
   age
