@@ -46,7 +46,7 @@ resource "null_resource" "dcr-view" {
 }
 
 # Creating a Data Exchange to host the Data Clean Room
-# This is during the Data Clean Room is in Alpha as the API is not available/documented 
+# This is while the Data Clean Room is in Alpha as the API is not available/documented 
 resource "google_bigquery_analytics_hub_data_exchange" "data-exchange" {
   project = module.land-project.project_id
   location         = var.location

@@ -26,6 +26,9 @@ locals {
    "roles/analyticshub.publisher" = [
       module.land-sa-0.iam_email
     ]
+   "roles/iam.serviceAccountTokenCreator" = [
+      module.land-sa-0.iam_email
+    ]   
   }
 }
 
