@@ -72,7 +72,7 @@ module "prc-sa-0" {
   display_name = "Publisher zone service account."
 }
 
-resource "google_project_iam_member" "project" {
+resource "google_project_iam_member" "iam-prc" {
   for_each = { for role, members in local.iam_prc : role => members }
   role     = each.key
   member   = each.value[0]

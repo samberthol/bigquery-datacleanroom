@@ -15,20 +15,16 @@ locals {
   ]
   iam_cur = {
     "roles/bigquery.admin" = [
-      module.cur-sa-0.iam_email,
-      "user:${var.super_admin}"
+      module.cur-sa-0.iam_email
     ]
     "roles/analyticshub.viewer" = [
-      module.cur-sa-0.iam_email,
-      "user:${var.super_admin}"
+      module.cur-sa-0.iam_email
     ]
     "roles/analyticshub.subscriber" = [
-      module.cur-sa-0.iam_email,
-      "user:${var.super_admin}"
+      module.cur-sa-0.iam_email
     ]
    "roles/analyticshub.publisher" = [
-      module.cur-sa-0.iam_email,
-      "user:${var.super_admin}"
+      module.cur-sa-0.iam_email
     ]
   }
 }
@@ -63,6 +59,14 @@ module "cur-sa-0" {
   prefix       = var.prefix
   name         = "cur-sa-0"
   display_name = "Subscriber zone service account."
+}
+
+resource "google_project_iam_member" "iam-cur" {
+  for_each = { for role, members in local.iam_cur : role => members }
+  role     = each.key
+  member   = each.value[0]
+  project  = module.cur-project.project_id
+  depends_on = [module.cur-sa-0]
 }
 
 # Subscribing to the clean room listing through an API call

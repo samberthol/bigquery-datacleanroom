@@ -32,7 +32,7 @@ output "bigquery-datasets" {
   value = {
     thelook_dataset = module.thelook-dataset.dataset_id,
     datacleanroom_dataset = module.dcr-dataset.dataset_id,
-    publisher_dataset = module.prc-dataset.dataset_id,
+    publisher_dataset = module.publisher-dataset.dataset_id,
     publisher_dataset_dcr = module.dcr-publisher-dataset.dataset_id
   }
 }
