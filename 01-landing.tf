@@ -27,8 +27,8 @@ locals {
       module.land-sa-0.iam_email
     ]
    "roles/iam.serviceAccountTokenCreator" = [
-      module.land-sa-0.iam_email
-    ]   
+      "serviceAccount:service-${module.land-project.number}@gcp-sa-bigquerydatatransfer.iam.gserviceaccount.com"
+    ]  
   }
 }
 

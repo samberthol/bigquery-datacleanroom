@@ -31,10 +31,7 @@ locals {
     ]
     "roles/storage.admin" = [
       module.prc-sa-0.iam_email
-    ]
-   "roles/iam.serviceAccountTokenCreator" = [
-      module.land-sa-0.iam_email
-    ]           
+    ]         
   }
   publisher_schema_users = jsonencode([
     { name = "id", type = "INT64" },

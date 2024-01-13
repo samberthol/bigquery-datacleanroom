@@ -23,7 +23,7 @@ output "accounts" {
   value = {
     Landing_DCR_SA    = module.land-sa-0.email,
     Subscriber_SA     = module.cur-sa-0.email,
-    Publisher_SA      = module.prc-sa-0.email   
+    Publisher_SA      = module.prc-sa-0.email, 
     Billing_account   = var.project_config.billing_account_id,
     Super_admin       = var.super_admin    
   }
