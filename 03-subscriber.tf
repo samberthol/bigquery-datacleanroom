@@ -70,11 +70,11 @@ resource "google_project_iam_member" "iam-cur" {
 }
 
 # Subscribing to the clean room listing through an API call
-resource "null_resource" "subscribe_listing" {
+resource "null_resource" "subscribe-listing" {
   provisioner "local-exec" {
     command = <<-EOF
       curl --request POST \
-      'https://analyticshub.googleapis.com/v1beta1/projects/${module.land-project.number}/locations/${var.location}/dataExchanges/${google_bigquery_analytics_hub_data_exchange.data_exchange.data_exchange_id}/listings/${google_bigquery_analytics_hub_listing.listing.listing_id}:subscribe' \
+      'https://analyticshub.googleapis.com/v1beta1/projects/${module.land-project.number}/locations/${var.location}/dataExchanges/${google_bigquery_analytics_hub_data_exchange.data-exchange.data_exchange_id}/listings/${google_bigquery_analytics_hub_listing.dcr-listing.listing_id}:subscribe' \
       --header "Authorization: Bearer $(gcloud auth print-access-token)" \
       --header 'Accept: application/json' \
       --header 'Content-Type: application/json' \

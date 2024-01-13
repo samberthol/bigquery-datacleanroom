@@ -152,7 +152,7 @@ resource "null_resource" "dcr-publisher-view" {
 resource "google_bigquery_analytics_hub_listing" "publisher-listing" {
   project = module.land-project.project_id
   location         = var.location
-  data_exchange_id = google_bigquery_analytics_hub_data_exchange.data_exchange.data_exchange_id
+  data_exchange_id = google_bigquery_analytics_hub_data_exchange.data-exchange.data_exchange_id
   listing_id       = "publisher_listing"
   display_name     = "publisher_listing"
   description      = "Publisher listing for the ${var.data_exchange} clean room"

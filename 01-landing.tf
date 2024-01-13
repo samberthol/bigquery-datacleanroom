@@ -15,16 +15,16 @@ locals {
   ]
   iam_lnd = {
     "roles/bigquery.admin" = [
-      module.land-sa-0.iam_email,
+      module.land-sa-0.iam_email
     ]
     "roles/analyticshub.viewer" = [
-      module.land-sa-0.iam_email,
+      module.land-sa-0.iam_email
     ]
     "roles/analyticshub.subscriber" = [
-      module.land-sa-0.iam_email,
+      module.land-sa-0.iam_email
     ]
    "roles/analyticshub.publisher" = [
-      module.land-sa-0.iam_email,
+      module.land-sa-0.iam_email
     ]
   }
 }
