@@ -39,7 +39,7 @@ module "dcr-dataset" {
 
 # Creating a view with a privacy policy - this makes the dataexchange behave like a Data Clean Room 
 resource "null_resource" "dcr-view" {
-  depends_on = [google_bigquery_data_transfer_config.thelook-transfer]
+  depends_on = [google_bigquery_data_transfer_config.thelook-transfer, module.dcr-dataset]
   provisioner "local-exec" {
     command = "bq query --project_id ${module.land-project.project_id} --nouse_legacy_sql 'CREATE OR REPLACE VIEW `${module.land-project.project_id}.dcr_dataset.dcr_view` OPTIONS (privacy_policy= \"{\\\"aggregation_threshold_policy\\\": {\\\"threshold\\\" : 20, \\\"privacy_unit_columns\\\": \\\"id\\\"}}\") AS ( SELECT id, age, email, state, city FROM `${module.land-project.project_id}.${module.thelook-dataset.dataset_id}.users` )';"
   }

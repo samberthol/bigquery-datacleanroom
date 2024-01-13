@@ -119,7 +119,7 @@ resource "google_bigquery_data_transfer_config" "publisher-transfer" {
   project = module.prc-project.project_id
   display_name           = "publisher-transfer"
   location               = var.location
-  schedule               = "every 1 hour"
+  schedule               = "every 1 hours"
   data_source_id         = "google_cloud_storage"
   destination_dataset_id = module.publisher-dataset.dataset_id
   service_account_name   = module.prc-sa-0.email
