@@ -56,7 +56,7 @@ module "prc-project" {
   name = (
     var.project_config.billing_account_id == null
     ? var.project_config.project_ids.processing
-    : "${var.project_config.project_ids.processing}2${local.project_suffix}"
+    : "${var.project_config.project_ids.processing}${local.project_suffix}"
   )
   iam = (
     var.project_config.billing_account_id != null ? {} : local.iam_prc

@@ -55,3 +55,19 @@ resource "google_bigquery_analytics_hub_listing_iam_binding" "binding" {
     "user:${var.super_admin}",
   ]
 }
+
+# This is a subscription from the landing zone to the Publisher's listing in the Clean Room
+resource "null_resource" "subscribe-publisher-listing" {
+  depends_on = [google_bigquery_analytics_hub_listing.publisher-listing]
+  provisioner "local-exec" {
+    command = <<-EOF
+      curl --request POST \
+      'https://analyticshub.googleapis.com/v1beta1/projects/${module.land-project.number}/locations/${var.location}/dataExchanges/${google_bigquery_analytics_hub_data_exchange.data_exchange.data_exchange_id}/listings/${google_bigquery_analytics_hub_listing.publisher-listing.listing_id}:subscribe' \
+      --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+      --header 'Accept: application/json' \
+      --header 'Content-Type: application/json' \
+      --data '{ "destinationDataset": { "datasetReference": { "datasetId": "subscribed_publisher_dataset", "projectId": "${module.land-project.project_id}" }, "location": "${var.location}" } }' \
+      --compressed
+    EOF
+  }
+}
