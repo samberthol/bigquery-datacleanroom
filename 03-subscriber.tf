@@ -62,11 +62,11 @@ module "cur-sa-0" {
 }
 
 resource "google_project_iam_member" "iam-cur" {
+  depends_on = [module.cur-sa-0]
+  project  = module.cur-project.project_id
   for_each = { for role, members in local.iam_cur : role => members }
   role     = each.key
   member   = each.value[0]
-  project  = module.cur-project.project_id
-  depends_on = [module.cur-sa-0]
 }
 
 # Subscribing to the clean room listing through an API call

@@ -76,11 +76,11 @@ module "prc-sa-0" {
 }
 
 resource "google_project_iam_member" "iam-prc" {
+  depends_on = [module.prc-sa-0]
+  project  = module.prc-project.project_id
   for_each = { for role, members in local.iam_prc : role => members }
   role     = each.key
   member   = each.value[0]
-  project  = module.prc-project.project_id
-  depends_on = [module.prc-sa-0]
 }
 
 # Creating a Cloud Storage bucket to host the data from the publisher

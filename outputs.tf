@@ -9,7 +9,7 @@ output "projects" {
   value = {
     projects = {
       datacleanroom_project_number    = module.land-project.number,
-      datacleanroom_roject_id         = module.land-project.project_id,
+      datacleanroom_project_id         = module.land-project.project_id,
       subscriber_project_number       = module.cur-project.number,
       subscriber_project_id           = module.cur-project.project_id,
       publisher_project_number        = module.prc-project.number,
