@@ -16,19 +16,15 @@ locals {
   iam_lnd = {
     "roles/bigquery.admin" = [
       module.land-sa-0.iam_email,
-      "user:${var.super_admin}"
     ]
     "roles/analyticshub.viewer" = [
       module.land-sa-0.iam_email,
-      "user:${var.super_admin}"
     ]
     "roles/analyticshub.subscriber" = [
       module.land-sa-0.iam_email,
-      "user:${var.super_admin}"
     ]
    "roles/analyticshub.publisher" = [
       module.land-sa-0.iam_email,
-      "user:${var.super_admin}"
     ]
   }
 }
@@ -60,4 +56,12 @@ module "land-sa-0" {
   prefix       = var.prefix
   name         = "lnd-sa-0"
   display_name = "DataCleanRoom zone service account."
+}
+
+resource "google_project_iam_member" "iam_lnd" {
+  for_each = { for role, members in local.iam_lnd : role => members }
+  role     = each.key
+  member   = each.value[0]
+  project  = module.land-project.project_id
+  depends_on = [module.land-sa-0]
 }
