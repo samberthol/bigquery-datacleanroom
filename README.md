@@ -1,7 +1,7 @@
 # BigQuery Data Clean Room on Google Cloud deployment with Terraform
 This project intends to provide a deployment of a Bigquery Data Clean Room on Google Cloud using Terraform.
 
-Disclaimer : While writing this project, several features of the BigQuery Data Clean Room product are not yet available or still "Pre-GA" stage. Various workarounds have been used to make this Clean Room deployable. This is not supported code by Google and is provided on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND.
+Disclaimer : While writing this project, several features of the BigQuery Data Clean Room product are not yet available or still "Pre-GA" stage. Some workarounds have been used to make this Clean Room deployable. This is not supported code by Google and is provided on as is, without warranties of any kind.
 
 ## Architecture Design
 
@@ -15,7 +15,10 @@ This deployment is based on the Google Cloud [Cloud Foundation Fabric](https://g
 
 In the current setup we use the DataExchange feature of BigQuery Analytics Hub since Data Clean Rooms are not yet fully available through the API. We implement on the DataExchange the [Privacy Policies](https://cloud.google.com/bigquery/docs/privacy-policies#what_is_a_privacy_policy) that enable to provide the same feature as the Data Clean Room does, by enforcing an `aggregation_threshold`.
 
-In this architecture we deploy two projects, one for hosting the Data Clean Room and the second to simulate a subscriber project to the Clean Room. 
+In this architecture we deploy three projects for : 
+- Hosting the Data Clean Room
+- Simulating a subscriber to the Clean Room
+- Publishing data to the Clean Room 
 
 ## Setup
 
@@ -56,8 +59,8 @@ In order to verify it works you can go to the Google Cloud console and check tha
 - In the `land-project` Project (hosting the Data Clean Room), you should have in the BigQuery > Analytics Hub, you should see an Exchange with a Listing associated. In the Exchange, you should see a Subscriber associated to the Listing.
 - In the `curated-project` Project (for the Subscriber), you should see a Linked Dataset in BigQuery Studio
 
-You can verify the Data Clean Room is effective by issuing a SQL query in the `curated-project` that takes advantage of the Aggregation features of the Clean Room, such as :
-```
+From the subscriber side you can verify the Data Clean Room is effective by issuing a SQL query in the `curated-project` that takes advantage of the Aggregation features of the Clean Room, such as :
+```sql
 SELECT
 WITH
   AGGREGATION_THRESHOLD OPTIONS(threshold=20, privacy_unit_column=id) 
@@ -68,6 +71,36 @@ FROM
 
 GROUP BY
   age
+ORDER BY
+  1 desc;
+```
+
+From the Clean Room side, you can verify that the data issued by the Publisher is masked in its privacy column. You can also issue queries to join data from the Clean Room Views and join on the local Thelook dataset such as (in this case to match hashed emails) :
+```sql
+SELECT
+WITH
+  AGGREGATION_THRESHOLD OPTIONS(
+    threshold=1, 
+    privacy_unit_column=hashed_email
+  ) 
+  advertiser.id,
+  advertiser.email,
+  publisher.traffic_source,
+  publisher.country,
+  publisher.city,
+  publisher.age,
+  publisher.gender
+FROM
+  `thelook.users` AS advertiser
+
+JOIN
+  `subscribed_publisher_dataset.dcr_view` AS publisher
+ON
+
+TO_BASE64(MD5(advertiser.email)) = publisher.hashed_email
+
+GROUP BY
+  1,2,3,4,5,6,7
 ORDER BY
   1 desc;
 ```
