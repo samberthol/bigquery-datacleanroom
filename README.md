@@ -1,7 +1,7 @@
 # BigQuery Data Clean Room on Google Cloud deployment with Terraform
 This project intends to provide a deployment of a Bigquery Data Clean Room on Google Cloud using Terraform.
 
-Disclaimer : While writing this project, several features of the BigQuery Data Clean Room product are not yet available or still "Pre-GA" stage. Some workarounds have been used to make this Clean Room deployable. This is not supported code by Google and is provided on as is, without warranties of any kind.
+Disclaimer : While writing this project, several features of the BigQuery Data Clean Room product are not yet available or still "Pre-GA" stage. Some workarounds have been used to make this Clean Room deployable. This is not supported code by Google and is provided as is, without warranties of any kind.
 
 ## Architecture Design
 
