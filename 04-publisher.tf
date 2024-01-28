@@ -106,10 +106,17 @@ module "publisher-dataset" {
   project_id     = module.prc-project.project_id
   id             = "publisher_dataset"
   location       = var.location
+  options        = {
+    default_table_expiration_ms     = null
+    default_partition_expiration_ms = null
+    delete_contents_on_destroy      = var.delete_contents_on_destroy
+    max_time_travel_hours           = null
+  }
   tables = {
     users = {
       friendly_name       = "users"
       schema = local.publisher_schema_users
+      deletion_protection = var.deletion_protection
     }
   }
 }
@@ -140,6 +147,12 @@ module "dcr-publisher-dataset" {
   project_id     = module.prc-project.project_id
   id             = "dcr_publisher_dataset"
   location       = var.location
+  options        = {
+    default_table_expiration_ms     = null
+    default_partition_expiration_ms = null
+    delete_contents_on_destroy      = var.delete_contents_on_destroy
+    max_time_travel_hours           = null
+  }
 }
 
 resource "null_resource" "dcr-publisher-view" {
