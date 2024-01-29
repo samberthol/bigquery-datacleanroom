@@ -10,6 +10,12 @@ module "thelook-dataset" {
   project_id     = module.land-project.project_id
   id             = var.thelook_dataset
   location       = var.location
+  options        = {
+    default_table_expiration_ms     = null
+    default_partition_expiration_ms = null
+    delete_contents_on_destroy      = var.delete_contents_on_destroy
+    max_time_travel_hours           = null
+  }
 }
 
 # Setting up the transfer of the sample data set "thelook_ecommerce" from the public project "bigquery-public-data" to the Data Clean Room project
@@ -35,6 +41,12 @@ module "dcr-dataset" {
   project_id     = module.land-project.project_id
   id             = var.dcr_dataset
   location       = var.location
+  options        = {
+    default_table_expiration_ms     = null
+    default_partition_expiration_ms = null
+    delete_contents_on_destroy      = var.delete_contents_on_destroy
+    max_time_travel_hours           = null
+  }
 }
 
 # Creating a view with a privacy policy - this makes the dataexchange behave like a Data Clean Room 
